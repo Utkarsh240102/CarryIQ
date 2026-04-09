@@ -1,1 +1,203 @@
-# FastAPI route definitions — to be implemented in Step 4
+"""
+API Routes (Substep 4.2)
+--------------------------
+Defines all URL endpoints for the CarryIQ API.
+Each endpoint reads from pre-computed JSON files in data/processed/.
+
+Registered under the /api prefix in main.py, so:
+  /health    →  /api/health
+  /brands    →  /api/brands
+  /metrics   →  /api/metrics
+  /sentiment →  /api/sentiment
+  /insights  →  /api/insights
+  /run-pipeline → /api/run-pipeline
+"""
+
+import json
+import sys
+from pathlib import Path
+
+from fastapi import APIRouter, BackgroundTasks, HTTPException
+
+from .models import (
+    BrandSentiment,
+    HealthResponse,
+    InsightsResponse,
+    MetricsResponse,
+    PipelineRequest,
+    PipelineResponse,
+    SentimentResponse,
+)
+
+# ─── Paths ─────────────────────────────────────────────────────────────────────
+
+BASE_DIR      = Path(__file__).resolve().parents[2]
+PROCESSED_DIR = BASE_DIR / "data" / "processed"
+
+METRICS_FILE   = PROCESSED_DIR / "metrics.json"
+SENTIMENT_FILE = PROCESSED_DIR / "sentiment_results.json"
+INSIGHTS_FILE  = PROCESSED_DIR / "insights.json"
+
+
+# ─── Router Instance ───────────────────────────────────────────────────────────
+
+router = APIRouter()
+
+
+# ─── Helper ────────────────────────────────────────────────────────────────────
+
+def _load_json(path: Path) -> dict | list:
+    """
+    Safely load a JSON file or raise an HTTP 503 if it doesn't exist yet.
+    This gives the frontend a helpful error instead of a silent crash.
+    """
+    if not path.exists():
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                f"Data not yet available: '{path.name}'. "
+                "Please run the pipeline first with POST /api/run-pipeline."
+            )
+        )
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+# ─── Endpoints ─────────────────────────────────────────────────────────────────
+
+@router.get(
+    "/health",
+    response_model=HealthResponse,
+    summary="Server Health Check",
+    description="Returns server status and whether data files are available.",
+)
+def health_check():
+    """
+    Quick check that the server is alive.
+    The frontend can poll this before loading data.
+    """
+    data_ready = (
+        METRICS_FILE.exists() and
+        SENTIMENT_FILE.exists() and
+        INSIGHTS_FILE.exists()
+    )
+    return HealthResponse(
+        status="ok",
+        version="1.0.0",
+        data_available=data_ready,
+    )
+
+
+@router.get(
+    "/brands",
+    response_model=list[str],
+    summary="List All Brands",
+    description="Returns the list of all brands available in the dataset.",
+)
+def get_brands():
+    """
+    Reads metrics.json and extracts just the brand names.
+    Used by the frontend filter selectors.
+    """
+    data = _load_json(METRICS_FILE)
+    return [item["brand"] for item in data]
+
+
+@router.get(
+    "/metrics",
+    response_model=MetricsResponse,
+    summary="Brand Intelligence Scores",
+    description=(
+        "Returns the full competitive intelligence leaderboard. "
+        "Each brand includes its Intelligence Score (0-100), "
+        "confidence badge, and raw metric breakdown."
+    ),
+)
+def get_metrics():
+    """
+    Returns the full leaderboard data sorted by Intelligence Score (highest first).
+    This powers the main Bar Chart and Leaderboard Table in the dashboard.
+    """
+    data = _load_json(METRICS_FILE)
+    return MetricsResponse(data=data, total_brands=len(data))
+
+
+@router.get(
+    "/sentiment",
+    response_model=SentimentResponse,
+    summary="Brand Sentiment Analysis",
+    description=(
+        "Returns LLM-generated sentiment data for all brands including "
+        "scores, top positive aspects, top complaints, and notable quotes."
+    ),
+)
+def get_sentiment():
+    """
+    Reads sentiment_results.json (keyed by brand name) and converts
+    it to a list format that the frontend can loop through easily.
+    """
+    raw = _load_json(SENTIMENT_FILE)
+
+    # sentiment_results.json is stored as a dict: {brand: {...}}
+    # We convert it to a list for simpler frontend consumption
+    sentiment_list = []
+    for brand, values in raw.items():
+        sentiment_list.append(BrandSentiment(
+            brand=brand,
+            sentiment_score=values.get("sentiment_score", 0.5),
+            top_positives=values.get("top_positives", []),
+            top_complaints=values.get("top_complaints", []),
+            notable_quotes=values.get("notable_quotes", []),
+        ))
+
+    return SentimentResponse(data=sentiment_list, total_brands=len(sentiment_list))
+
+
+@router.get(
+    "/insights",
+    response_model=InsightsResponse,
+    summary="AI Executive Market Insights",
+    description=(
+        "Returns the LLM-generated strategic market analysis including "
+        "headline, market summary, key anomaly, and per-brand highlights."
+    ),
+)
+def get_insights():
+    """
+    Reads the insights.json file generated by the LLM insights module.
+    This powers the 'Agent Insights' section at the top of the dashboard.
+    """
+    data = _load_json(INSIGHTS_FILE)
+    return InsightsResponse(**data)
+
+
+@router.post(
+    "/run-pipeline",
+    response_model=PipelineResponse,
+    summary="Trigger Full Data Pipeline",
+    description=(
+        "Runs the complete pipeline: scrape (or mock) → clean → sentiment → metrics → insights. "
+        "Pass mock=true in the body to use synthetic data."
+    ),
+)
+def run_pipeline_endpoint(
+    request: PipelineRequest,
+    background_tasks: BackgroundTasks,
+):
+    """
+    Triggers the full data pipeline as a background task.
+    The endpoint returns immediately with a 'started' message
+    so the frontend doesn't hang waiting for a 5-minute pipeline.
+    """
+    def _run():
+        # Re-import here to avoid circular imports at module load time
+        from backend.main import run_pipeline
+        run_pipeline(mock=request.mock)
+
+    background_tasks.add_task(_run)
+
+    return PipelineResponse(
+        success=True,
+        message="Pipeline started in background. Poll /api/health to check when data is ready.",
+        mode="mock" if request.mock else "live",
+    )
