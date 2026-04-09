@@ -4,7 +4,11 @@
  * All components import from here — never fetch() directly.
  */
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const ENV_URL = import.meta.env.VITE_API_URL;
+// Ensure Render injected URL has /api suffixed to match FastAPI routes
+const BASE_URL = ENV_URL 
+  ? (ENV_URL.endsWith('/api') ? ENV_URL : `${ENV_URL}/api`) 
+  : 'http://localhost:8000/api';
 
 async function request(endpoint) {
   const res = await fetch(`${BASE_URL}${endpoint}`);

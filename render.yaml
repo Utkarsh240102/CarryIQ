@@ -1,0 +1,30 @@
+services:
+  # 1. FastAPI Backend (Web Service)
+  - type: web
+    name: carryiq-backend
+    env: python
+    region: oregon
+    buildCommand: "pip install -r backend/requirements.txt && playwright install chromium --with-deps"
+    startCommand: "PYTHONPATH=. uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: LLM_PROVIDER
+        value: openrouter
+      - key: OPENROUTER_API_KEY
+        sync: false # You will paste your API key securely in the Render Dashboard
+      - key: PYTHON_VERSION
+        value: 3.11.0 # Strict Python version for Render compatibility
+
+  # 2. React Frontend (Static Site)
+  - type: web
+    name: carryiq-frontend
+    env: static
+    region: oregon
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: carryiq-backend
+          envVarKey: RENDER_EXTERNAL_URL
+        property: value # Automatically injects the backend's Render live URL

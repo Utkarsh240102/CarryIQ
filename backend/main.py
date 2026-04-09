@@ -44,11 +44,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",   # Vite React dev server
-        "http://localhost:3000",   # Alternative React port
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=["*"],           # Allows Render Frontend domain to connect
     allow_credentials=True,
     allow_methods=["*"],           # GET, POST, OPTIONS, etc.
     allow_headers=["*"],
