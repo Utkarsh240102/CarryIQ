@@ -158,11 +158,13 @@ async def _scrape_search_results(page, brand: str) -> list[dict]:
     for item in results[:MAX_PRODUCTS_PER_BRAND]:
         try:
             # Title
-            title_el = await item.query_selector("h2 a span")
+            title_el = await item.query_selector("h2")
             title = (await title_el.inner_text()).strip() if title_el else None
 
             # URL
             link_el = await item.query_selector("h2 a")
+            if not link_el:
+                link_el = await item.query_selector("a.a-link-normal")
             href = await link_el.get_attribute("href") if link_el else None
             full_url = AMAZON_BASE + href if href and href.startswith("/") else href
 
@@ -368,6 +370,9 @@ async def run_scraper(brands: list[str] | None = None, headless: bool = True):
 
     if captcha_triggered:
         print("\n  ⚠ CAPTCHA was hit. Run with --mock flag for full data.")
+        return False
+    if total_products == 0:
+        print("\n  ⚠ No products were scraped (DOM mismatch or silent block). Triggering fallback.")
         return False
     return True
 

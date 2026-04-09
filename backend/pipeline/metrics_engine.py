@@ -141,7 +141,7 @@ def calculate_metrics() -> None:
     print(f"[Metrics] Saved to: {OUTPUT_JSON}")
     
     # Print a quick leaderboard
-    print("\n   🏆 Leaderboard:")
+    print("\n   --- Leaderboard ---")
     for i, r in enumerate(results):
         print(f"   {i+1}. {r['brand']:<20} | Score: {r['intelligence_score']}/100")
 

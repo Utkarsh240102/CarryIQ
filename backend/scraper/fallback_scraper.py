@@ -188,11 +188,13 @@ def scrape_brand_fallback(brand: str, max_products: int = 10) -> bool:
         for item in results[:max_products]:
             try:
                 # Title
-                title_el = item.select_one("h2 a span")
+                title_el = item.select_one("h2")
                 title = title_el.get_text(strip=True) if title_el else None
 
                 # Product URL
                 link_el = item.select_one("h2 a")
+                if not link_el:
+                    link_el = item.select_one("a.a-link-normal")
                 href = link_el.get("href") if link_el else None
                 full_url = AMAZON_BASE + href if href and href.startswith("/") else href
 
