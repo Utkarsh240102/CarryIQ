@@ -59,12 +59,12 @@ export default function App() {
       const res = await api.runPipeline(mock);
       setPipelineMsg(res.message);
       
-      // We start polling to see when data becomes available
-      // In a real production app we'd use WebSockets, but polling is fine here
+      // We start polling to see when the backend finishes the pipeline
       const poll = setInterval(async () => {
         try {
           const h = await api.health();
-          if (h.data_available) {
+          // We wait until the pipeline is NO LONGER running, and data is available
+          if (h.data_available && !h.is_pipeline_running) {
             clearInterval(poll);
             setPipelineMsg("Pipeline complete! Reloading dashboard...");
             await fetchData();

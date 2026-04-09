@@ -43,6 +43,9 @@ INSIGHTS_FILE  = PROCESSED_DIR / "insights.json"
 
 router = APIRouter()
 
+# Global state to track background pipeline execution
+is_pipeline_running = False
+
 
 # ─── Helper ────────────────────────────────────────────────────────────────────
 
@@ -85,6 +88,7 @@ def health_check():
         status="ok",
         version="1.0.0",
         data_available=data_ready,
+        is_pipeline_running=is_pipeline_running,
     )
 
 
@@ -190,9 +194,14 @@ def run_pipeline_endpoint(
     so the frontend doesn't hang waiting for a 5-minute pipeline.
     """
     def _run():
-        # Re-import here to avoid circular imports at module load time
-        from backend.main import run_pipeline
-        run_pipeline(mock=request.mock)
+        global is_pipeline_running
+        is_pipeline_running = True
+        try:
+            # Re-import here to avoid circular imports at module load time
+            from backend.main import run_pipeline
+            run_pipeline(mock=request.mock)
+        finally:
+            is_pipeline_running = False
 
     background_tasks.add_task(_run)
 

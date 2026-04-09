@@ -18,6 +18,7 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     data_available: bool
+    is_pipeline_running: bool = False
 
 
 # ─── Metrics ──────────────────────────────────────────────────────────────────
