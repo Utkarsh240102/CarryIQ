@@ -50,6 +50,27 @@
   --radius-xl:  24px;
 }
 
+[data-theme="light"] {
+  --bg-void:        #f8fafc;
+  --bg-base:        #f1f5f9;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #ffffff;
+  --bg-glass:       rgba(255, 255, 255, 0.75);
+
+  --text-primary:   #0f172a;
+  --text-secondary: #334155;
+  --text-muted:     #64748b;
+
+  --border-subtle:  rgba(59, 130, 246, 0.2);
+  --border-glow:    rgba(59, 130, 246, 0.45);
+
+  --shadow-glow-blue: 0 0 30px rgba(59, 130, 246, 0.15), 0 10px 40px rgba(0, 0, 0, 0.05);
+  --shadow-card:      0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0,0,0,0.02);
+  
+  --gradient-hero:    linear-gradient(135deg, #f8fafc 0%, #e2e8f0 40%, #ffffff 100%);
+}
+
+
 /* ═══════════════════════════════════════════════════════
    RESET + BASE
 ═══════════════════════════════════════════════════════ */
@@ -97,6 +118,19 @@ body {
   z-index: 0;
 }
 
+[data-theme="light"] .app-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139, 92, 246, 0.05), transparent),
+    var(--bg-void);
+}
+
+[data-theme="light"] .app-bg::before {
+  background-image:
+    linear-gradient(rgba(59,130,246,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.08) 1px, transparent 1px);
+}
+
 /* ═══════════════════════════════════════════════════════
    LAYOUT
 ═══════════════════════════════════════════════════════ */
@@ -124,6 +158,11 @@ body {
   background: rgba(2, 4, 8, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  transition: background 0.3s ease;
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .navbar-brand {
@@ -319,6 +358,11 @@ body {
   padding: 18px 20px;
 }
 
+[data-theme="light"] .insights-block {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
 .insights-block-label {
   font-size: 10px;
   font-weight: 600;
@@ -391,6 +435,10 @@ body {
   cursor: default;
 }
 
+[data-theme="light"] .leaderboard-row {
+  background: rgba(0, 0, 0, 0.02);
+}
+
 .leaderboard-row:hover {
   background: rgba(59, 130, 246, 0.07);
   border-color: var(--border-glow);
@@ -442,6 +490,9 @@ body {
   overflow: hidden;
   max-width: 140px;
 }
+
+[data-theme="light"] .score-bar-bg { background: rgba(0,0,0,0.06); }
+[data-theme="light"] .rank-n { background: rgba(0,0,0,0.06); }
 
 .score-bar-fill {
   height: 100%;
@@ -535,6 +586,10 @@ body {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+}
+
+[data-theme="light"] .sentiment-card {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .sentiment-card::before {

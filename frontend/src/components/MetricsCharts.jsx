@@ -19,21 +19,21 @@ const CustomTooltip = ({ active, payload }) => {
     const data = payload[0].payload;
     return (
       <div style={{
-        background: 'rgba(10, 22, 40, 0.9)',
-        border: '1px solid rgba(59, 130, 246, 0.3)',
+        background: 'var(--bg-glass)',
+        border: '1px solid var(--border-glow)',
         borderRadius: '8px',
         padding: '12px 16px',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+        boxShadow: 'var(--shadow-card)',
         backdropFilter: 'blur(10px)'
       }}>
-        <div style={{ fontWeight: 700, fontSize: '15px', color: '#fff', marginBottom: '6px' }}>
+        <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)', marginBottom: '6px' }}>
           {data.brand}
         </div>
-        <div style={{ fontSize: '13px', color: '#94a3b8' }}>
-          ⭐ Rating: <strong style={{ color: '#f1f5f9' }}>{data.rating}</strong>/5.0
+        <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+          ⭐ Rating: <strong style={{ color: 'var(--text-primary)' }}>{data.rating}</strong>/5.0
         </div>
-        <div style={{ fontSize: '13px', color: '#94a3b8' }}>
-          💖 Sentiment: <strong style={{ color: '#f1f5f9' }}>{data.sentiment}</strong>/1.0
+        <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+          💖 Sentiment: <strong style={{ color: 'var(--text-primary)' }}>{data.sentiment}</strong>/1.0
         </div>
       </div>
     );

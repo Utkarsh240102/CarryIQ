@@ -16,6 +16,14 @@ export default function App() {
   const [isScraping, setIsScraping] = useState(false);
   const [pipelineMsg, setPipelineMsg] = useState("");
 
+  // Theme State
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -109,6 +117,20 @@ export default function App() {
             </div>
           </div>
           <div className="navbar-actions">
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '20px',
+                padding: '4px',
+                transition: 'transform 0.2s'
+              }}
+              title="Toggle Day/Night Mode"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
             <div className="navbar-badge">
               <div className="navbar-badge-dot"></div>
               Live API Connection
