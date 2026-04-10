@@ -1,0 +1,110 @@
+{
+  "American Tourister": {
+    "brand": "American Tourister",
+    "sentiment_score": 0.75,
+    "top_positives": [
+      "great build quality",
+      "perfect condition",
+      "durable product"
+    ],
+    "top_complaints": [
+      "build quality decline",
+      "returned after one use",
+      "packaging issues"
+    ],
+    "notable_quotes": [
+      "Excellent quality for the price, would highly recommend.",
+      "Build quality has clearly gone down compared to older models."
+    ]
+  },
+  "Aristocrat": {
+    "brand": "Aristocrat",
+    "sentiment_score": 0.73,
+    "top_positives": [
+      "value for money",
+      "perfect travel companion",
+      "excellent quality"
+    ],
+    "top_complaints": [
+      "build quality issues",
+      "durability concerns",
+      "overpriced"
+    ],
+    "notable_quotes": [
+      "Value for money is outstanding! Better than bags twice the price.",
+      "The bag didn't even last 6 months before showing serious wear."
+    ]
+  },
+  "Nasher Miles": {
+    "brand": "Nasher Miles",
+    "sentiment_score": 0.68,
+    "top_positives": [
+      "excellent quality",
+      "value for money",
+      "perfect travel companion"
+    ],
+    "top_complaints": [
+      "poor quality control",
+      "build quality decline",
+      "customer service issues"
+    ],
+    "notable_quotes": [
+      "Value for money is outstanding! Better than bags twice the price.",
+      "Customer service didn't respond to my damage complaint."
+    ]
+  },
+  "Safari": {
+    "brand": "Safari",
+    "sentiment_score": 0.65,
+    "top_positives": [
+      "value for money",
+      "great build quality",
+      "excellent handle"
+    ],
+    "top_complaints": [
+      "thin material",
+      "poor packaging",
+      "quality issues"
+    ],
+    "notable_quotes": [
+      "Value for money is outstanding! Better than bags twice the price.",
+      "Not worth the price. Would not recommend to anyone."
+    ]
+  },
+  "Skybags": {
+    "brand": "Skybags",
+    "sentiment_score": 0.75,
+    "top_positives": [
+      "excellent quality",
+      "value for money",
+      "perfect travel companion"
+    ],
+    "top_complaints": [
+      "zipper issues",
+      "poor quality control",
+      "customer service"
+    ],
+    "notable_quotes": [
+      "Excellent quality for the price, would highly recommend.",
+      "Very disappointed with the overall quality and finish."
+    ]
+  },
+  "Vip": {
+    "brand": "Vip",
+    "sentiment_score": 0.68,
+    "top_positives": [
+      "sturdy handle",
+      "spacious compartments",
+      "excellent quality for price"
+    ],
+    "top_complaints": [
+      "poor build quality",
+      "overpriced",
+      "loud wheels"
+    ],
+    "notable_quotes": [
+      "Very happy with this purchase, delivery was also fast.",
+      "Build quality has clearly gone down compared to older models."
+    ]
+  }
+}

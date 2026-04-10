@@ -1,0 +1,34 @@
+{
+  "headline": "Aristocrat leads Indian luggage market with strong consumer sentiment.",
+  "market_summary": "The Indian luggage market shows healthy competition with Aristocrat as the clear leader, boasting the highest intelligence score and a strong value proposition. Skybags and Nasher Miles follow closely, indicating a robust demand for quality luggage options.",
+  "key_anomaly": "Despite Aristocrat's leading position, it faces significant complaints regarding build quality and durability, which could undermine its reputation. Conversely, American Tourister has a high average star rating but struggles with packaging issues and product returns.",
+  "strategic_recommendation": "Brands should focus on enhancing product durability and addressing customer service complaints to improve overall satisfaction. Investing in quality control measures could help mitigate negative feedback and strengthen brand loyalty.",
+  "brand_highlights": [
+    {
+      "brand": "Aristocrat",
+      "insight": "Strong value for money perception, but must address durability concerns."
+    },
+    {
+      "brand": "Skybags",
+      "insight": "High ratings reflect excellent quality, yet zipper issues need resolution."
+    },
+    {
+      "brand": "Nasher Miles",
+      "insight": "Good average ratings, but customer service issues could deter buyers."
+    },
+    {
+      "brand": "Safari",
+      "insight": "Value for money is a strength, but thin material complaints persist."
+    },
+    {
+      "brand": "American Tourister",
+      "insight": "High price point with strong ratings, yet packaging issues affect sales."
+    },
+    {
+      "brand": "Vip",
+      "insight": "Offers good quality for price, but build quality concerns may limit growth."
+    }
+  ],
+  "generated_at": "2026-04-10T06:01:07",
+  "total_brands_analyzed": 6
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "brand": "Aristocrat",
+    "intelligence_score": 82.6,
+    "confidence_level": "High",
+    "metrics": {
+      "avg_price": 3114.0,
+      "avg_rating": 3.92,
+      "total_reviews": 33796,
+      "llm_sentiment_score": 0.73
+    }
+  },
+  {
+    "brand": "Skybags",
+    "intelligence_score": 81.3,
+    "confidence_level": "High",
+    "metrics": {
+      "avg_price": 4671.0,
+      "avg_rating": 4.25,
+      "total_reviews": 32197,
+      "llm_sentiment_score": 0.75
+    }
+  },
+  {
+    "brand": "Nasher Miles",
+    "intelligence_score": 79.4,
+    "confidence_level": "High",
+    "metrics": {
+      "avg_price": 4570.0,
+      "avg_rating": 4.12,
+      "total_reviews": 34360,
+      "llm_sentiment_score": 0.68
+    }
+  },
+  {
+    "brand": "Safari",
+    "intelligence_score": 78.1,
+    "confidence_level": "High",
+    "metrics": {
+      "avg_price": 4082.0,
+      "avg_rating": 4.15,
+      "total_reviews": 32167,
+      "llm_sentiment_score": 0.65
+    }
+  },
+  {
+    "brand": "American Tourister",
+    "intelligence_score": 75.2,
+    "confidence_level": "High",
+    "metrics": {
+      "avg_price": 7736.0,
+      "avg_rating": 4.32,
+      "total_reviews": 25298,
+      "llm_sentiment_score": 0.75
+    }
+  },
+  {
+    "brand": "Vip",
+    "intelligence_score": 73.1,
+    "confidence_level": "High",
+    "metrics": {
+      "avg_price": 3637.0,
+      "avg_rating": 4.03,
+      "total_reviews": 21642,
+      "llm_sentiment_score": 0.68
+    }
+  }
+]

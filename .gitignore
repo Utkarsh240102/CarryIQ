@@ -39,10 +39,7 @@ frontend/.npm/
 Thumbs.db
 
 # Project specific data
-data/raw/*.csv
-data/raw/*.json
-data/processed/*.csv
-data/processed/*.json
+
 
 # IDE
 .vscode/
