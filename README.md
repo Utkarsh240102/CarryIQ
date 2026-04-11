@@ -1,5 +1,4 @@
 # CarryIQ — Amazon India Luggage Competitive Intelligence
-
 <br>
 
 A full-stack, AI-driven competitive intelligence dashboard designed to extract, analyze, and present structured market data from Amazon India luggage brands. Built specifically as a submission for the **Moonshot AI Agent Internship Assignment**.
